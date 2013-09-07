@@ -1,0 +1,39 @@
+#alt-text-engaged-title {
+	display: none;
+	position: fixed;
+	z-index: 99999;
+	right: -3px;
+	bottom: -6px;
+	max-width: 40%;
+	padding: 1px 5px 6px 4px;
+	background: #ffffa3;
+	color: #444;
+	border: 1px solid #f1d031;
+	border-radius: 5px;
+	font-family: 'Helvetica', 'Arial', sans-serif;
+	font-variant: normal;
+	font-weight: 300;
+	font-size: 13px;
+	line-height: 1;
+}
+
+#alt-text-engaged-overlay {
+	display: none;
+	position: absolute;
+	z-index: 99998;
+	background-color: rgba(0, 0, 0, 0);
+	font-family: 'Helvetica', 'Arial', sans-serif;
+	font-variant: normal;
+	font-weight: 300;
+	font-size: 13px;
+	line-height: 1;
+}
+
+.alt-text-engaged-spot {
+	display: none;
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background: rgba(255, 255, 163, 0.3);
+}
