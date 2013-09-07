@@ -32,7 +32,7 @@ fi
 temp="$(mktemp -d)"
 
 git fat init
-echo -e "[rsync]\nremote = $temp" > .gitfat
+echo -e "[rsync]\nremote = $temp/chrome-alt-text-engaged" > .gitfat
 chmod 0600 .public-s3fs
 s3fs -o passwd_file='.public-s3fs' zship "$temp"
 git fat pull
