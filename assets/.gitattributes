@@ -1,1 +1,2 @@
-#$# git-fat 8f9318b88679b299504475af5918ae85165fdfa1                   34
+* filter=fat -crlf
+.gitattributes filter=''
