@@ -1,0 +1,4 @@
+# Example .gitfat configuration file. Change the path below to the mount point
+# you used with s3fs e.g. `s3fs zship /your/mount/point`
+[rsync]
+remote = /mnt/s3/zship/chrome-alt-text-engaged

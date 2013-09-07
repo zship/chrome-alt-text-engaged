@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# fat-pull
+#
+# A quick-start script to: 
+# 1. Configure git-fat and s3fs for pulling this repository's large files
+# 2. Actually pull the files
+# 3. Clean up
+#
+# This is intended for people who just want to take a look at the binary files
+# in the repo. Folks working on the repo will want to set up git-fat and s3fs
+# manually for read/write access.
+
+set -e
+set -o pipefail
+
+if [[ ! $(which git-fat) ]]; then
+	echo "git-fat is required for pulling the large files in this repository"
+	exit 1
+fi
+
+if [[ ! $(which s3fs) ]]; then
+	echo "s3fs is required for pulling the large files in this repository"
+	exit 1
+fi
+
+if [[ -f ".gitfat" ]]; then
+	echo ".gitfat configuration file already exists. This script is only intended to be used as a quick-start, so it does not overwrite any existing .gitfat config"
+	exit 1
+fi
+
+temp="$(mktemp -d)"
+
+git fat init
+echo -e "[rsync]\nremote = $temp" > .gitfat
+chmod 0600 .public-s3fs
+s3fs -o passwd_file='.public-s3fs' zship "$temp"
+git fat pull
+
+timeout=5
+timeout_date=$(($(date +%s) + $timeout))
+
+until fusermount -u "$temp" 2>/dev/null || [[ $(date +%s) -gt $timeout_date ]]; do
+	:
+done
+
+rmdir "$temp"
+rm .gitfat
