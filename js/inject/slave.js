@@ -14,12 +14,27 @@ window.altTextEngaged.slave = (function() {
 
 
 	var disableAlt = function(el) {
-		var title = el.getAttribute('title') || el.getAttribute('alt');
-		if (title) {
-			el.setAttribute('data-alt-text-engaged-title', title);
+		var title = el.getAttribute('title');
+		var alt = el.getAttribute('alt');
+		var display = title || alt;
+
+		if (display) {
+			el.setAttribute('data-alt-text-engaged-title', display);
 		}
+
 		el.removeAttribute('title');
-		el.removeAttribute('alt');
+
+		// allow downstream JavaScript access to the original title
+		// property (JIRA depends on them to pass state from the server, for
+		// one)
+		Object.defineProperty(el, 'title', {
+			get: function() {
+				return title;
+			},
+			set: function(val) {
+				this.setAttribute('data-alt-text-engaged-title', val);
+			}
+		});
 	};
 
 
